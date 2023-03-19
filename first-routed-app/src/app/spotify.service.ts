@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
 
 //Dichiaro che il servizio è iniettabile agli altri componenti a partire dal componente root
 @Injectable({
@@ -8,14 +10,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class SpotifyService {
    //url per oauth: https://developer.spotify.com/console/get-search-item/
   //Ottengo il modulo HttpClient
+  oauth = environment.oauthToken
   constructor(private http: HttpClient) { }
 
   searchTrack(query: string) {
     const url = `https://api.spotify.com/v1/search?q=${query}&type=track`;
     const headers = new HttpHeaders({
-      Authorization:
-        'Bearer BQBUsFVzFQfxhZ8SKQFXA3UlgzQ38n9C7E2XuFf-UxWNoVn5lcNFHN5d0edNVRzI1g-TDjv7Z3BNKEeEmsfioWFFFgSClVPELkJOYzsSLxUEppDL_myUM5Ep7Rsx47FkyHL2Zx-G4MYwIBx0tEJc1NuLV23sLxGkcN_9hTf87zLsnPtiNAozHxOstHaKfb_10vvL'
-    });
+      Authorization: this.oauth});
 
     let obsTracks = this.http.get(url, { headers });
     return obsTracks;
@@ -25,11 +26,31 @@ export class SpotifyService {
     const url = `https://api.spotify.com/v1/tracks/${id}`;
     const headers = new HttpHeaders({
       Authorization:
-        'Bearer BQBUsFVzFQfxhZ8SKQFXA3UlgzQ38n9C7E2XuFf-UxWNoVn5lcNFHN5d0edNVRzI1g-TDjv7Z3BNKEeEmsfioWFFFgSClVPELkJOYzsSLxUEppDL_myUM5Ep7Rsx47FkyHL2Zx-G4MYwIBx0tEJc1NuLV23sLxGkcN_9hTf87zLsnPtiNAozHxOstHaKfb_10vvL'
+      this.oauth
     });
     
     return this.http.get(url, { headers });
   }
+   // getArtist viene richiamata nel componente artista
+  getArtist(id: string) {
+    const url = `https://api.spotify.com/v1/artists/${id}`;
+    const headers = new HttpHeaders({Authorization: environment.oauthToken});
+    
+    return this.http.get(url, { headers });
+  }
+  getArtistA(id: string) {
+    const url = `https://api.spotify.com/v1/artists/${id}/albums`;
+    const headers = new HttpHeaders({Authorization: environment.oauthToken});
+    
+    return this.http.get(url, { headers });
+  }
+  getAlbum(id: string) {
+    const url = `https://api.spotify.com/v1/albums/${id}`;
+    const headers = new HttpHeaders({Authorization: environment.oauthToken});
+    
+    return this.http.get(url, { headers });
+  }
+
 
 
 }

@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { SpotifyService } from '../spotify.service';
 import { Observable } from 'rxjs';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-track',
   templateUrl: './track.component.html',
   styleUrls: ['./track.component.css']
 })
-export class TrackComponent implements OnInit {
+export class TrackComponent{
   //Osserva gli eventi sulla route tracks, restituisce la ParamMap che contiene tutti i   
   //parametri passati all’url
   routeObs!: Observable<ParamMap>;
@@ -19,7 +20,7 @@ export class TrackComponent implements OnInit {
   //SpotifyService
   constructor(
     private route: ActivatedRoute, 
-    private router: Router, 
+    private location: Location,
     private service: SpotifyService ) { }
 
 
@@ -42,9 +43,11 @@ export class TrackComponent implements OnInit {
   }
 
 
-  back()
-  {//DA FINIRE 
+  back() : void
+  {
+    this.location.back();
   }
+
      
 }
 
