@@ -1,0 +1,9 @@
+
+<h2>Nome Prodotto: {{food.product.product_name | json}}</h2>
+<img src="{{food.product.image_front_url}}" alt="">
+<h2>Brand: {{food.product.brands | json}}</h2>
+<p><a href (click)="back()">Back</a></p>
+
+<p *ngFor="let k of objk(food.product)">
+    {{k}}
+</p>
